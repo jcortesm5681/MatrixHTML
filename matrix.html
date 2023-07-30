@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	<title>Jaime Cortés</title>
+    <meta name="description" content="Información general de JaimeCortes">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="https://www.lipsum.com/favicon.ico">
+	<link rel="stylesheet" type="text/css" href="./estilos/matixfont.css">
+ </head> 
+<body style="background-color:#000000;" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" rightmargin="0">
+<canvas width="100%" height="600" id="canv"> </canvas>
+<script language="javascript" type="text/javascript"> 
+//1. Definición del texto. Text definition
+//Se lee un documento aleatorio de la carpeta dada
+//It reads a ramdom document in certain folder
+
+var n=3570;// cantidad de documentos html en la carpeta. Number of documents in folder
+var numAleatorio= Math.round(Math.random()*(n-1));
+var seleccion= String(numAleatorio);
+var Eltexto= "Lo mejor sería poner un texto por defecto...        No nos adelantemos...            a veces no alcanza a leer el archivo y ya manda a pantalla, para que no genere error, mando texto por defecto.";//texto por defecto; Default text
+var largo = -1;
+console.log("/poesi/"+seleccion+".html")
+fetch("./poesi/"+seleccion+".html")
+.then(res => res.text())
+.then(content => {
+	//console.log(content)
+	var parser = new DOMParser();
+	var doc = parser.parseFromString(content, "text/html");
+	var poemaTxt = doc.getElementsByClassName('poema')
+	Eltexto= poemaTxt[0].innerText  ;
+	console.log(Eltexto);
+	//Changing some spanish characters, just for fun:
+	Eltexto = Eltexto.replace(/ñ/gi, "%");
+	Eltexto = Eltexto.replace(/á/gi, "(");
+	Eltexto = Eltexto.replace(/é/gi, ")");
+	Eltexto = Eltexto.replace(/í/gi, "*");
+	Eltexto = Eltexto.replace(/ó/gi, "+");
+	Eltexto = Eltexto.replace(/ú/gi, "-");
+
+	largo= Eltexto.length
+	console.log(largo)
+});
+
+
+//console.log(Eltexto);
+
+//2. Definición de variables del canvas; Set canvas variables
+const canvas = document.getElementById('canv');
+const ctx = canvas.getContext('2d');
+
+const w = canvas.width = document.body.offsetWidth;
+const h = canvas.height = document.body.offsetHeight;
+const cols = Math.floor(w / 20) + 1;
+const ypos = Array(cols).fill(0);
+console.log ("w="+w +" h="+h)
+console.log (ypos)
+
+
+
+
+ctx.fillStyle = '#000';
+ctx.fillRect(0, 0, w, h);
+var contador=0;
+
+//3. Función que escribe los caracteres del texto anterior con la fuente matrix definida en el archivo:  ./estilos/matixfont.css
+// Function writes the characters from the text, It uses a Matrix Font defined in file ./estilos/matixfont.css
+function matrix () {
+  // Draw a semitransparent black rectangle on top of previous drawing
+  ctx.fillStyle = '#0001';
+  ctx.fillRect(0, 0, w, h);
+
+  // Set color to green and font to matrix
+  ctx.fillStyle = '#0f0';
+  ctx.font = "20px Matrix";
+  
+  
+  ypos.forEach((y, ind) => {
+    var text="";
+	if (Eltexto[contador]=== undefined){
+		contador=1;
+		text = Eltexto[contador];
+	}else{
+		text = Eltexto[contador]; 
+		contador=contador+1;
+	}
+	
+	// x coordinate of the column, y coordinate is already given
+	const x = ind * 20;
+    ctx.fillText(text, x, y);
+    //setTimeout(() => {  console.log("World:"+ text); }, 50000);
+    console.log ("t="+text +" x="+x+" y="+ y);
+	
+	// randomly reset the end of the column if it's at least 100px high
+    if (y > 100 + Math.random() * 10000) ypos[ind] = 0;
+	// otherwise just move the y coordinate for the column 20px down,
+    else ypos[ind] = y + 20;
+  });
+}
+
+
+//4. Llamado de la función cada 50 Ms
+// call function every 50 Ms
+setInterval(matrix, 50);
+ 
+</script>
+</body></html>
