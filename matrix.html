@@ -52,8 +52,8 @@ const w = canvas.width = document.body.offsetWidth;
 const h = canvas.height = document.body.offsetHeight;
 const cols = Math.floor(w / 20) + 1;
 const ypos = Array(cols).fill(0);
-#console.log ("w="+w +" h="+h)
-#console.log (ypos)
+//console.log ("w="+w +" h="+h)
+//console.log (ypos)
 
 
 
@@ -88,7 +88,7 @@ function matrix () {
 	const x = ind * 20;
     ctx.fillText(text, x, y);
     //setTimeout(() => {  console.log("World:"+ text); }, 50000);
-    console.log ("t="+text +" x="+x+" y="+ y);
+    //console.log ("t="+text +" x="+x+" y="+ y);
 	
 	// randomly reset the end of the column if it's at least 100px high
     if (y > 100 + Math.random() * 10000) ypos[ind] = 0;
