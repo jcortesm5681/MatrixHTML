@@ -41,6 +41,10 @@ fetch("./poesi/"+seleccion+".html")
 	console.log(largo)
 });
 
+// Función para generar números aleatorios en el rango específico
+function generarNumeroAleatorio(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 //console.log(Eltexto);
 
@@ -51,7 +55,8 @@ const ctx = canvas.getContext('2d');
 const w = canvas.width = document.body.offsetWidth;
 const h = canvas.height = document.body.offsetHeight;
 const cols = Math.floor(w / 20) + 1;
-const ypos = Array(cols).fill(0);
+//const miArray = Array(cols).fill().map(() => generarNumeroAleatorio(min, max));
+const ypos = Array(cols).fill().map(() => generarNumeroAleatorio(-100, 200));;
 //console.log ("w="+w +" h="+h)
 //console.log (ypos)
 
@@ -65,12 +70,9 @@ var contador=0;
 //3. Función que escribe los caracteres del texto anterior con la fuente matrix definida en el archivo:  ./estilos/matixfont.css
 // Function writes the characters from the text, It uses a Matrix Font defined in file ./estilos/matixfont.css
 function matrix () {
-  // Draw a semitransparent black rectangle on top of previous drawing
-  ctx.fillStyle = '#0001';
-  ctx.fillRect(0, 0, w, h);
 
-  // Set color to green and font to matrix
-  ctx.fillStyle = '#0f0';
+
+ 
   ctx.font = "20px Matrix";
   
   
@@ -86,21 +88,46 @@ function matrix () {
 	
 	// x coordinate of the column, y coordinate is already given
 	const x = ind * 20;
+
+	// Draw a semitransparent black rectangle on top of previous drawing
+	ctx.fillStyle = '#0002';
+    ctx.fillRect(x, y-400, 20, h);
+
+	ctx.fillStyle = '#000';
+    ctx.fillRect(x, y-20, 20, 20);
+
+
+
+	ctx.fillStyle = '#0f0';
     ctx.fillText(text, x, y);
     //setTimeout(() => {  console.log("World:"+ text); }, 50000);
     //console.log ("t="+text +" x="+x+" y="+ y);
+
+	// Draw a semitransparent black rectangle on top of previous drawing
+	ctx.fillStyle = '#0002';
+    ctx.fillRect(x, y+20, 20, h);//*/
+
+
+
 	
 	// randomly reset the end of the column if it's at least 100px high
-    if (y > 100 + Math.random() * 10000) ypos[ind] = 0;
-	// otherwise just move the y coordinate for the column 20px down,
-    else ypos[ind] = y + 20;
+    if (y > 100 + Math.random() * 10000){
+		ypos[ind] = 0;	
+	}else{
+		// otherwise just move the y coordinate for the column 20px down,
+		ctx.fillStyle = '#fff';
+		if(text==" ") text="*";
+        ctx.fillText(text, x, y+20);
+		ypos[ind] = y + 20;	
+	} 
+	
   });
 }
 
 
 //4. Llamado de la función cada 50 Ms
 // call function every 50 Ms
-setInterval(matrix, 50);
+setInterval(matrix, 200);
  
 </script>
 </body></html>
