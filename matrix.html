@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./estilos/matixfont.css">
 </head>
 <body style="background-color:#000000;" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" rightmargin="0">
-    <canvas width="100%" height="600" id="canv"></canvas>
+    <canvas height="700" width="100%" id="canv"></canvas>
     <script language="javascript" type="text/javascript">
         // 1. Definición del texto. Text definition
         // Se lee un documento aleatorio de la carpeta dada
@@ -82,7 +82,7 @@
                 // Dibuje un rectángulo negro semitransparente encima de la posición actual.
                 // Draw a semitransparent black rectangle on top of the current position
                 ctx.fillStyle = '#0002';
-                ctx.fillRect(x, y - 400, 20, h);
+                ctx.fillRect(x, y - h, 20, h);
 
                 // 'Borre' el caracter blanco actual del fondo (poniendo rectángulo negro sólido encima)
                 // 'Delete' actual white character in the bottom (put black solid rectangle above)
