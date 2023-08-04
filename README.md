@@ -17,6 +17,14 @@ El usuario también tiene la opción de personalizar el color de los caracteres 
 
 ![Descripción de la imagen](imgMatrixHtml3.png)
 
+
+Se da soporte, durante su ejecución, de las siguientes opciones
+
+        +        para aumentar la velocidad
+        -        para disminuir la velocidad
+        r,g,b,a  para cambiar color r:Rojo, g:Verde, b:Azul, a:Ambar
+       
+
 ### EN
 
 The Matrix effect on the "Jaime Cortés" page is an impressive visual representation inspired by the popular film trilogy "The Matrix." Upon loading the page, visitors are greeted with a canvas animation that evokes the iconic green code cascading down from the movie.
