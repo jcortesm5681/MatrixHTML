@@ -8,8 +8,8 @@
     <link rel="icon" type="image/x-icon" href="https://www.lipsum.com/favicon.ico">
     <link rel="stylesheet" type="text/css" href="./estilos/matixfont.css">
 </head>
-<body style="background-color:#000000;" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" rightmargin="0">
-    <canvas height="700" width="100%" id="canv"></canvas>
+<body style="background-color:#000000;" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" rightmargin="0"  onkeydown="detecta(event)">
+    <canvas height="600" width="100%" id="canv"></canvas>
     <script language="javascript" type="text/javascript">
         // 1. Definición del texto. Text definition
         // Se lee un documento aleatorio de la carpeta dada
@@ -19,6 +19,10 @@
         var seleccion = String(numAleatorio);
         var Eltexto = "Lo mejor sería poner un texto por defecto...        No nos adelantemos...            a veces no alcanza a leer el archivo y ya manda a pantalla, para que no genere error, mando texto por defecto."; // texto por defecto; Default text
         var largo = -1;
+        var LaVelocidad = 50; // Velocidad inicial
+        const velocidadMinima = 10;
+        const velocidadMaxima = 200;
+        let intervalID;
         console.log("/poesi/" + seleccion + ".html");
         fetch("./poesi/" + seleccion + ".html")
             .then(res => res.text())
@@ -114,11 +118,54 @@
                     ypos[ind] = y + 20;
                 }
             });
+
+           
+        }
+
+        function detecta(event) {
+            var tecla = event.key;
+            if (tecla === "+") {
+                aumentarVelocidad();
+                 // Limpia el intervalo actual antes de establecer uno nuevo con la nueva velocidad
+                clearInterval(intervalID);
+                // Establece el nuevo intervalo con la velocidad actualizada
+                intervalID = setInterval(matrix, LaVelocidad);
+                //alert(LaVelocidad)
+            } else if (tecla === "-") {
+                disminuirVelocidad();
+                 // Limpia el intervalo actual antes de establecer uno nuevo con la nueva velocidad
+                clearInterval(intervalID);
+                // Establece el nuevo intervalo con la velocidad actualizada
+                intervalID = setInterval(matrix, LaVelocidad);
+                //alert(LaVelocidad)
+            } else if (tecla === "a") {
+                Elcolor = "#ff7e00";
+            } else if (tecla === "g") {
+                Elcolor = "#0f0";
+            } else if (tecla === "r") {
+                Elcolor = "#f00";
+            } else if (tecla === "b") {
+                Elcolor = "#00f";
+            }
+        }
+
+ 
+        function aumentarVelocidad() {
+            if (LaVelocidad > velocidadMinima) {
+                LaVelocidad -= 15; // Disminuir la velocidad en 10ms
+            }
+        }
+
+        function disminuirVelocidad() {
+            if (LaVelocidad < velocidadMaxima) {
+                LaVelocidad += 15; // Aumentar la velocidad en 10ms
+            }
         }
 
         // 4. Llamado de la función cada 50 Ms
         // call function every 50 Ms
-        setInterval(matrix, 50);
+        intervalID = setInterval(matrix, LaVelocidad);
+      
     </script>
 </body>
 </html>
