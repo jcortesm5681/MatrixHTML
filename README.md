@@ -10,12 +10,12 @@ Los caracteres de la matriz están dispuestos en una fuente especial de estilo "
 
 La animación del efecto Matrix es suave y cautivadora, con caracteres que aparecen y desaparecen gradualmente a medida que avanzan por la columna. Los caracteres blancos se borran y se sustituyen por un rectángulo negro semitransparente, lo que crea un efecto de movimiento fluido y enigmático.
 
-![Descripción de la imagen](imgMatrixHtml.png)
+![Descripción de la imagen](img/imgMatrixHtml.png)
 
 El usuario también tiene la opción de personalizar el color de los caracteres en la animación mediante la modificación de un parámetro en la URL, lo que permite adaptar la experiencia visual a sus preferencias personales.
 
 
-![Descripción de la imagen](imgMatrixHtml3.png)
+![Descripción de la imagen](img/imgMatrixHtml3.png)
 
 
 Se da soporte, durante su ejecución, de las siguientes opciones
