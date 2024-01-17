@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" href="./estilos/matixfont.css">
 </head>
 <body style="background-color:#000000;" leftmargin="0" topmargin="0" marginwidth="0" marginheight="0" rightmargin="0"  onkeydown="detecta(event)">
-    <canvas height="600" width="100%" id="canv"></canvas>
+    <canvas height="800" width="100%" id="canv"></canvas>
     <script language="javascript" type="text/javascript">
         // 1. Definición del texto. Text definition
         // Se lee un documento aleatorio de la carpeta dada
@@ -19,7 +19,7 @@
         var seleccion = String(numAleatorio);
         var Eltexto = "Lo mejor sería poner un texto por defecto...        No nos adelantemos...            a veces no alcanza a leer el archivo y ya manda a pantalla, para que no genere error, mando texto por defecto."; // texto por defecto; Default text
         var largo = -1;
-        var LaVelocidad = 50; // Velocidad inicial
+        var LaVelocidad = 180; // Velocidad inicial
         const velocidadMinima = 10;
         const velocidadMaxima = 200;
         let intervalID;
@@ -62,7 +62,7 @@
         const w = canvas.width = document.body.offsetWidth;
         const h = canvas.height = document.body.offsetHeight;
         const cols = Math.floor(w / 20) + 1;
-        const ypos = Array(cols).fill().map(() => generarNumeroAleatorio(-100, 200)); // alturas aleatorias. random heights
+        ypos = Array(cols).fill().map(() => generarNumeroAleatorio(-100, h)); // alturas aleatorias. random heights
         var contador = 0;
 
         // 3. Función que escribe los caracteres del texto anterior con la fuente matrix definida en el archivo:  ./estilos/matixfont.css
@@ -111,10 +111,15 @@
                     // de otra forma, mueva la coordenada a la siguiente posición de la columna de 20px ; 
                     // otherwise just move the y coordinate for the column 20px down, 
                     ctx.fillStyle = '#fff';
-                    if (text == " ") text = "3"; // just for fun change spaces 
+                    //if (text == " ") text = "3"; // just for fun change spaces 
+                    const c2 = "0123456789abcdefghijklmnopqrstuvwxyz";
+                    const c2Array = Array.from(c2);
+
+                    const randomIndex = Math.floor(Math.random() * c2Array.length);
+                    const text2 = c2Array[randomIndex];
                     // y escriba un caracter blanco en la nueva posición al fondo de la columna (se ve bien)
                     // and write white character in the new position at the bottom of the column (look good)
-                    ctx.fillText(text, x, y + 20);
+                    ctx.fillText(text2, x, y + 20);
                     ypos[ind] = y + 20;
                 }
             });
@@ -166,6 +171,22 @@
         // call function every 50 Ms
         intervalID = setInterval(matrix, LaVelocidad);
       
+
+        function handleResize() {
+            const canvas = document.getElementById('canv');
+            const w = canvas.width = window.innerWidth-10;
+            const h = canvas.height = window.innerHeight-10;
+
+            const cols = Math.floor(w / 20) + 1;
+            ypos = Array(cols).fill().map(() => generarNumeroAleatorio(-100, h)); // alturas aleatorias. random heights
+            matrix()
+
+        }
+        window.addEventListener('resize', handleResize);
+
+        // Llama a la función al cargar la página para establecer las dimensiones iniciales
+        handleResize();
+
     </script>
 </body>
 </html>
